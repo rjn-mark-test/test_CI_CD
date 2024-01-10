@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add</title>
+    <script>
+     
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('myForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Convert the input values to numbers
+            var num1 = parseFloat(document.getElementsByName('num1')[0].value);
+            var num2 = parseFloat(document.getElementsByName('num2')[0].value);
+
+            fetch('/addup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `num1=${num1}&num2=${num2}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').textContent = 'Sum: ' + data.finalSum;
+            });
+        });
+    });
+</script>
+
+    </script>
+</head>
+<body>
+    <h2>ADD</h2>
+<form id = "myForm" action="/addup" method="post">
+    <input name = "num1" type ="number" placeholder="Number 1">
+    <input name = "num2" type = "number" placeholder="Number 2">
+    <button id = "submitt" type="submit">Add</button>
+    <div id="result"></div>
+
+</form>
+</body>
+</html>
